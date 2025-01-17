@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
-import { 
+import {
   Dropdown,
   Option,
   SelectionEvents,
   OptionOnSelectData,
   Subtitle1,
   Subtitle2,
-  Divider 
+  Divider
 } from '@fluentui/react-components';
 import { DeclarativeChart, IDeclarativeChart, Schema } from '@fluentui/react-charting';
 import PlotlyChart from './PlotlyChart';
@@ -108,23 +108,23 @@ export class DeclarativeChartBasicExample extends React.Component<IDeclarativeCh
         // Nothing to do here
       }
     }
-    const bgcolor= theme === "Dark" ? "rgb(17,17,17)" : "white"; // Full layout for dark mode https://jsfiddle.net/3hfq7ast/
-    const fontColor = {"font": { "color": "white" }}
+    const bgcolor = theme === "Dark" ? "rgb(17,17,17)" : "white"; // Full layout for dark mode https://jsfiddle.net/3hfq7ast/
+    const fontColor = { "font": { "color": "white" } }
     const layout_with_theme = { ...layout, plot_bgcolor: bgcolor, paper_bgcolor: bgcolor, font: fontColor };
     const plotlySchema = { data, layout: layout_with_theme, selectedLegends: this._lastKnownValidLegends };
     const inputSchema: Schema = { plotlySchema };
     return (
       <div key={uniqueKey}>
-        <Subtitle1 align="center" style={{marginLeft:'30%'}}>Declarative chart from fluent</Subtitle1>
+        <Subtitle1 align="center" style={{ marginLeft: '30%' }}>Declarative chart from fluent</Subtitle1>
         <div style={{ display: 'flex' }}>
           <label> Select a schema:</label>&nbsp;&nbsp;&nbsp;
-        <Dropdown
+          <Dropdown
             value={this.state.selectedChoice}
             onOptionSelect={this._onChange}
           >
             {schemasData.map((data) => (
-            <Option value={(data.schema as { id: string }).id}>{data.fileName}</Option>
-        ))}
+              <Option value={(data.schema as { id: string }).id}>{data.fileName}</Option>
+            ))}
           </Dropdown>
           &nbsp;&nbsp;&nbsp;
         </div>
@@ -141,8 +141,7 @@ export class DeclarativeChartBasicExample extends React.Component<IDeclarativeCh
         <div data-testid="chart-container" >
           <br />
           <br />
-          <Subtitle2>{selectedSchema.layout.title}</Subtitle2>
-          <Divider/>
+          <Subtitle2>{typeof selectedSchema.layout.title === 'string' ? selectedSchema.layout.title : typeof selectedSchema.layout.title.text === 'string' ? selectedSchema.layout.title.text : JSON.stringify(selectedSchema.layout.title)}</Subtitle2>
           <br />
           <br />
           <ErrorBoundary>
@@ -159,16 +158,16 @@ export class DeclarativeChartBasicExample extends React.Component<IDeclarativeCh
           value={this.state.selectedLegends}
           onChange={this._onSelectedLegendsEdited}
           styles={textFieldStyles}
-        />       
-        <br/>
+        />
+        <br />
         <div key={plotlyKey}>
-        <Divider/>
-        <br/>
-        <Subtitle1 align="center" style={{marginLeft:'30%'}}>Chart from plotly.js</Subtitle1>
+          <Divider />
+          <br />
+          <Subtitle1 align="center" style={{ marginLeft: '30%' }}>Chart from plotly.js</Subtitle1>
           <br />
           <br />
           <ErrorBoundary>
-            <PlotlyChart schema={plotlySchema}/>
+            <PlotlyChart schema={plotlySchema} />
           </ErrorBoundary>
         </div>
       </div>
